@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ======================================================
+   RESET & FOUNDATIONS
+   ====================================================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#1E1C19;
+  color:#E8E2D8;
+  min-height:100vh;
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+
+/* ======================================================
+   CSS CUSTOM PROPERTIES (Theme System)
+   ====================================================== */
+:root {
+  --accent: #D4728C;
+  --accent-dark: #E488A0;
+  --bg-light: #FDF6F8;
+  --bg-dark: #1E181A;
+  --text-light: #2C2528;
+  --text-dark: #E8DEE2;
+  --text-secondary-light: #3A3538;
+  --text-secondary-dark: #C4B4BC;
+  --text-muted-light: #8A7F85;
+  --text-muted-dark: #6A5F65;
+  --card-dark: #252022;
+  --border-dark: #3A3035;
+  --chip-inactive-dark: #2A2528;
+}
+
+/* ======================================================
+   PAGE LAYOUT
+   ====================================================== */
+.page-container{
+  max-width:480px;
+  margin:0 auto;
+  padding-bottom:80px;
+}
+
+/* ======================================================
+   INTRO HEADER
+   ====================================================== */
+.intro{
+  padding:48px 24px 28px;
+  text-align:center;
+  animation:fadeInUp 0.8s ease-out both;
+}
+.intro h1{
+  font-family:'Lora',serif;
+  font-size:22px;
+  font-weight:600;
+  color:#E8E2D8;
+  line-height:1.4;
+  margin-bottom:14px;
+}
+.intro p{
+  font-size:15px;
+  line-height:1.6;
+  color:#A09A90;
+  max-width:340px;
+  margin:0 auto;
+}
+.app-name-block{
+  margin-bottom:16px;
+}
+.app-name-struck{
+  font-family:'Lora',serif;
+  font-size:16px;
+  color:#A09A90;
+  letter-spacing:0.02em;
+}
+.app-name-struck s{
+  text-decoration:line-through;
+  text-decoration-color:var(--accent);
+}
+.app-name-tbd{
+  font-size:13px;
+  color:#6A655F;
+  margin-top:4px;
+  font-style:italic;
+}
+.intro-note{
+  font-size:12px;
+  color:#6A655F;
+  font-style:italic;
+  margin-top:12px;
+}
+
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ======================================================
+   THEME SWITCHER
+   ====================================================== */
+.theme-switcher{
+  text-align:center;
+  padding:0 24px 20px;
+  animation:fadeInUp 0.8s ease-out 0.2s both;
+}
+.theme-label{
+  font-size:11px;
+  font-weight:600;
+  color:#6A655F;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.theme-sub{
+  font-size:11px;
+  color:#4A4640;
+  margin-bottom:8px;
+}
+.theme-dots{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:6px;
+}
+.theme-dot{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  border:2.5px solid transparent;
+  cursor:pointer;
+  transition:all 0.25s;
+  -webkit-tap-highlight-color:transparent;
+  padding:0;
+  outline:none;
+}
+.theme-dot.active{
+  border-color:#E8E2D8;
+  transform:scale(1.15);
+  box-shadow:0 0 0 2px rgba(232,226,216,0.3);
+}
+.theme-name{
+  font-size:12px;
+  color:#8A857B;
+}
+.theme-footer{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin-top:6px;
+}
+.mode-toggle{
+  display:flex;
+  background:rgba(255,255,255,0.08);
+  border-radius:20px;
+  padding:3px;
+  gap:2px;
+}
+.mode-btn{
+  width:30px;
+  height:26px;
+  border-radius:16px;
+  border:none;
+  background:transparent;
+  color:#6A655F;
+  font-size:13px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.25s;
+  -webkit-tap-highlight-color:transparent;
+  padding:0;
+}
+.mode-btn.active{
+  background:rgba(255,255,255,0.15);
+  color:#E8E2D8;
+}
+
+/* ======================================================
+   PHONE MOCKUP (Single Centered Phone)
+   ====================================================== */
+.phone-section{
+  display:flex;
+  justify-content:center;
+  padding:0 20px 20px;
+}
+
+.phone{
+  position:relative;
+  width:100%;
+  max-width:340px;
+  aspect-ratio:390/844;
+  background:#000;
+  border-radius:44px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 20px 60px rgba(0,0,0,0.5),
+    0 4px 16px rgba(0,0,0,0.3),
+    inset 0 0 0 2px rgba(255,255,255,0.04);
+  overflow:hidden;
+}
+.phone::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:120px;
+  height:30px;
+  background:#000;
+  border-radius:0 0 18px 18px;
+  z-index:20;
+}
+.phone::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:50px;
+  z-index:15;
+  pointer-events:none;
+}
+
+.phone-screen{
+  position:absolute;
+  inset:0;
+  border-radius:42px;
+  overflow:hidden;
+}
+.phone-scroll{
+  position:absolute;
+  inset:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  overscroll-behavior:contain;
+}
+.phone-scroll::-webkit-scrollbar{display:none}
+
+.app-view{
+  min-height:100%;
+}
+
+/* Status bar */
+.status-bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 24px 8px;
+  font-size:12px;
+  font-weight:600;
+  transition:color 0.3s, background 0.3s;
+}
+.status-bar.light{
+  color:var(--text-light);
+}
+.status-bar.dark{
+  color:var(--text-dark);
+}
+.status-icons{
+  display:flex;
+  gap:5px;
+  align-items:center;
+  font-size:11px;
+}
+
+/* ======================================================
+   PHOTO PLACEHOLDERS
+   ====================================================== */
+.photo{
+  position:relative;
+  overflow:hidden;
+  background-size:cover;
+  background-position:center;
+}
+.photo-label{
+  position:absolute;
+  bottom:10px;
+  left:12px;
+  font-size:10px;
+  font-weight:500;
+  color:rgba(255,255,255,0.7);
+  text-shadow:0 1px 4px rgba(0,0,0,0.4);
+  letter-spacing:0.03em;
+}
+
+/* Photo backgrounds (Unsplash with gradient fallbacks) */
+.grad-acropolis{
+  background:linear-gradient(135deg,#C4754B 0%,#8B4A2D 60%,#5A3020 100%);
+  background-image:url('https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-ceramics{
+  background:linear-gradient(150deg,#7BA4C4 0%,#3A6B8D 60%,#1E3A55 100%);
+  background-image:url('https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-rooftop{
+  background:linear-gradient(160deg,#E8A060 0%,#C06040 60%,#7A3020 100%);
+  background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-market{
+  background:linear-gradient(140deg,#D4A06B 0%,#A07030 60%,#6A4A20 100%);
+  background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-cannes{
+  background:linear-gradient(130deg,#6A9BBF 0%,#E8A060 50%,#C06840 100%);
+  background-image:url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-lisbon{
+  background:linear-gradient(135deg,#D4A870 0%,#B08050 60%,#6A4A28 100%);
+  background-image:url('https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+.grad-harbor{
+  background:linear-gradient(145deg,#6A9BB0 0%,#3A6A80 60%,#1E3A4A 100%);
+  background-image:url('https://images.unsplash.com/photo-1499678329028-101435549a4e?w=800&h=600&fit=crop&q=80');
+  background-size:cover;background-position:center;
+}
+
+/* ======================================================
+   JOURNAL SCREEN (Trip Overview)
+   ====================================================== */
+.journal-screen{
+  background:var(--bg-light);
+  min-height:100%;
+  padding-bottom:64px;
+  transition:background 0.3s;
+}
+.journal-screen .status-bar{
+  background:rgba(253,246,248,0.9);
+}
+
+/* Trip header */
+.trip-cover{
+  position:relative;
+  height:160px;
+}
+.trip-cover .photo{
+  width:100%;
+  height:100%;
+}
+.trip-cover-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:16px 18px 14px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.55));
+  color:#fff;
+}
+.trip-cover-overlay h3{
+  font-family:'Lora',serif;
+  font-size:20px;
+  font-weight:600;
+  line-height:1.25;
+}
+.trip-cover-overlay .trip-dates{
+  font-size:11px;
+  opacity:0.8;
+  margin-top:3px;
+}
+
+/* Day chips */
+.day-chips{
+  display:flex;
+  gap:8px;
+  padding:14px 20px 10px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.day-chips::-webkit-scrollbar{display:none}
+.day-chip{
+  flex-shrink:0;
+  padding:8px 14px;
+  border-radius:20px;
+  background:#F5EEF0;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-muted-light);
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:all 0.3s;
+  white-space:nowrap;
+}
+.day-chip.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+
+/* Day card */
+.day-card{
+  margin:10px 16px 0;
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,0.05);
+  border:1px solid #E8E4DE;
+  transition:background 0.3s, border-color 0.3s, box-shadow 0.3s, opacity 0.3s ease, transform 0.3s ease;
+  display:none;
+  opacity:0;
+  transform:translateY(6px);
+}
+.day-card.visible{
+  display:block;
+}
+.day-card.visible.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.day-card-photo{
+  height:140px;
+}
+.day-card-body{
+  padding:14px 16px 16px;
+}
+.day-card-body .day-label{
+  font-size:11px;
+  font-weight:600;
+  color:var(--accent);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:4px;
+  transition:color 0.3s;
+}
+.day-card-body h4{
+  font-family:'Lora',serif;
+  font-size:17px;
+  font-weight:600;
+  color:var(--text-light);
+  margin-bottom:4px;
+  transition:color 0.3s;
+}
+.day-card-body .card-location{
+  font-size:11px;
+  color:var(--text-muted-light);
+  margin-bottom:10px;
+  transition:color 0.3s;
+}
+.day-card-body p{
+  font-family:'Lora',serif;
+  font-size:13px;
+  line-height:1.65;
+  color:var(--text-secondary-light);
+  transition:color 0.3s;
+}
+
+/* Tab bar */
+.tab-bar{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:58px;
+  background:rgba(255,255,255,0.95);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  border-top:1px solid #E8E4DE;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding-bottom:6px;
+  z-index:20;
+  transition:background 0.3s, border-color 0.3s;
+}
+.tab-bar-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  font-size:10px;
+  font-weight:500;
+  color:var(--text-muted-light);
+  transition:color 0.3s;
+}
+.tab-bar-item.active{
+  color:var(--accent);
+}
+.tab-bar-icon{
+  font-size:18px;
+}
+
+/* -- Journal Dark mode -- */
+.journal-screen.dark{
+  background:var(--bg-dark);
+}
+.journal-screen.dark .status-bar{
+  background:rgba(0,0,0,0.5);
+  color:var(--text-dark);
+}
+.journal-screen.dark .day-chip{
+  background:var(--chip-inactive-dark);
+  color:var(--text-muted-dark);
+}
+.journal-screen.dark .day-chip.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.journal-screen.dark .day-card{
+  background:var(--card-dark);
+  border-color:var(--border-dark);
+  box-shadow:0 1px 4px rgba(0,0,0,0.3);
+}
+.journal-screen.dark .day-card-body h4{
+  color:var(--text-dark);
+}
+.journal-screen.dark .day-card-body p{
+  color:var(--text-secondary-dark);
+}
+.journal-screen.dark .day-card-body .card-location{
+  color:var(--text-muted-dark);
+}
+.journal-screen.dark .tab-bar{
+  background:rgba(30,24,26,0.95);
+  border-top-color:var(--border-dark);
+}
+.journal-screen.dark .tab-bar-item{
+  color:var(--text-muted-dark);
+}
+.journal-screen.dark .tab-bar-item.active{
+  color:var(--accent);
+}
+.journal-screen.dark .trip-cover-overlay{
+  background:linear-gradient(transparent,rgba(0,0,0,0.6));
+}
+
+/* ======================================================
+   BOOK SCREEN (Day View)
+   ====================================================== */
+.book-screen{
+  background:var(--bg-light);
+  min-height:100%;
+  padding-bottom:24px;
+  transition:background 0.3s;
+}
+.book-screen .status-bar{
+  background:rgba(253,246,248,0.85);
+}
+
+.book-hero{
+  position:relative;
+  height:220px;
+}
+.book-hero .photo{
+  width:100%;
+  height:100%;
+}
+.book-hero-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:16px 20px 14px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.55));
+  color:#fff;
+}
+.book-hero-overlay .day-label{
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  opacity:0.8;
+  margin-bottom:4px;
+}
+.book-hero-overlay h3{
+  font-family:'Lora',serif;
+  font-size:20px;
+  font-weight:600;
+  line-height:1.25;
+}
+
+.book-location{
+  padding:12px 20px 0;
+  font-size:12px;
+  color:var(--text-muted-light);
+  transition:color 0.3s;
+}
+
+.book-content{
+  padding:14px 20px 0;
+}
+.book-content p{
+  font-family:'Lora',serif;
+  font-size:14px;
+  line-height:1.72;
+  color:var(--text-light);
+  margin-bottom:14px;
+  transition:color 0.3s;
+}
+.book-content .chapter-title{
+  font-family:'Lora',serif;
+  font-size:22px;
+  font-weight:600;
+  color:var(--text-light);
+  margin-bottom:8px;
+  transition:color 0.3s;
+}
+.book-content .inline-photo{
+  height:140px;
+  border-radius:6px;
+  margin-bottom:14px;
+}
+
+/* Voice Prompt Card */
+.voice-card{
+  background:#F5EEF0;
+  border-radius:12px;
+  padding:16px;
+  margin:8px 20px 14px;
+  transition:background 0.3s;
+}
+.voice-card .vc-label{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:8px;
+  transition:color 0.3s;
+}
+.voice-card .vc-question{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:14px;
+  line-height:1.55;
+  color:var(--text-secondary-light);
+  margin-bottom:12px;
+  transition:color 0.3s;
+}
+.voice-card .vc-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:20px;
+  padding:8px 16px;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background 0.3s;
+}
+
+/* Now Playing */
+.now-playing{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  margin:12px 20px;
+  background:rgba(0,0,0,0.04);
+  border-radius:10px;
+  transition:background 0.3s;
+}
+.np-icon{
+  font-size:16px;
+  color:var(--accent);
+  flex-shrink:0;
+}
+.np-info{
+  flex:1;
+  min-width:0;
+}
+.np-title{
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-light);
+  transition:color 0.3s;
+}
+.np-artist{
+  font-size:10px;
+  color:var(--text-muted-light);
+  transition:color 0.3s;
+}
+.np-wave{
+  display:flex;
+  align-items:flex-end;
+  gap:2px;
+  height:16px;
+}
+.np-wave span{
+  width:3px;
+  background:var(--accent);
+  border-radius:1px;
+  animation:wave 1.2s ease-in-out infinite;
+}
+.np-wave span:nth-child(1){height:8px;animation-delay:0s}
+.np-wave span:nth-child(2){height:14px;animation-delay:0.15s}
+.np-wave span:nth-child(3){height:10px;animation-delay:0.3s}
+.np-wave span:nth-child(4){height:6px;animation-delay:0.45s}
+
+@keyframes wave{
+  0%,100%{transform:scaleY(1)}
+  50%{transform:scaleY(0.4)}
+}
+
+/* ======================================================
+   BACK NAVIGATION
+   ====================================================== */
+.back-nav{
+  padding:4px 16px 8px;
+  font-size:14px;
+  font-weight:500;
+  color:var(--accent);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  transition:color 0.3s;
+}
+.back-arrow{
+  font-size:20px;
+  line-height:1;
+}
+.book-screen.dark .back-nav{ color:var(--accent-dark); }
+.day-story.dark .back-nav{ color:var(--accent-dark); }
+
+/* ======================================================
+   CROSSOVER MOMENT
+   ====================================================== */
+.crossover{
+  margin:8px 20px 14px;
+  padding:16px;
+  background:rgba(212,114,140,0.04);
+  border-radius:12px;
+  border:1px solid rgba(212,114,140,0.12);
+  transition:background 0.3s, border-color 0.3s;
+}
+.crossover-label{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:12px;
+  text-align:center;
+}
+.crossover-cards{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.crossover-card{
+  padding:12px 14px;
+  background:rgba(255,255,255,0.6);
+  border-radius:8px;
+  border-left:3px solid var(--accent);
+  transition:background 0.3s, border-color 0.3s;
+}
+.crossover-card.spencer{
+  border-left-color:var(--accent);
+  background:rgba(255,255,255,0.6);
+}
+.crossover-card.courtney{
+  border-left-color:#9B6B9E;
+  background:rgba(255,255,255,0.45);
+}
+.crossover-card .who{
+  font-size:11px;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:4px;
+}
+.crossover-card p{
+  font-family:'Lora',serif;
+  font-size:12.5px;
+  font-style:italic;
+  line-height:1.55;
+  color:var(--text-secondary-light);
+  transition:color 0.3s;
+  margin:0;
+}
+
+/* Day dots */
+.book-dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  padding:18px 0 6px;
+}
+.book-dots .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#DDD5C9;
+  transition:background 0.3s;
+}
+.book-dots .dot.active{
+  background:var(--accent);
+  width:20px;
+  border-radius:4px;
+}
+
+/* -- Book Dark mode -- */
+.book-screen.dark{
+  background:var(--bg-dark);
+}
+.book-screen.dark .status-bar{
+  background:rgba(0,0,0,0.5);
+  color:var(--text-dark);
+}
+.book-screen.dark .book-location{
+  color:var(--text-muted-dark);
+}
+.book-screen.dark .book-content p{
+  color:var(--text-dark);
+}
+.book-screen.dark .book-content .chapter-title{
+  color:var(--text-dark);
+}
+.book-screen.dark .voice-card{
+  background:var(--card-dark);
+}
+.book-screen.dark .voice-card .vc-question{
+  color:var(--text-secondary-dark);
+}
+.book-screen.dark .voice-card .vc-btn{
+  background:var(--accent-dark);
+}
+.book-screen.dark .now-playing{
+  background:rgba(255,255,255,0.06);
+}
+.book-screen.dark .np-title{
+  color:var(--text-dark);
+}
+.book-screen.dark .np-artist{
+  color:var(--text-muted-dark);
+}
+.book-screen.dark .crossover{
+  background:rgba(228,136,160,0.06);
+  border-color:rgba(228,136,160,0.15);
+}
+.book-screen.dark .crossover-card{
+  background:var(--card-dark);
+}
+.book-screen.dark .crossover-card.courtney{
+  background:rgba(37,32,34,0.8);
+}
+.book-screen.dark .crossover-card p{
+  color:var(--text-secondary-dark);
+}
+.book-screen.dark .book-dots .dot{
+  background:var(--border-dark);
+}
+.book-screen.dark .book-dots .dot.active{
+  background:var(--accent-dark);
+}
+
+/* ======================================================
+   FEEDBACK
+   ====================================================== */
+.fb-section{
+  max-width:380px;
+  margin:24px auto 40px;
+  padding:0 24px;
+}
+.fb-heading{
+  font-family:'Lora',serif;
+  font-size:18px;
+  font-weight:600;
+  color:#E8E2D8;
+  margin-bottom:20px;
+  text-align:center;
+}
+.fb-q{
+  margin-bottom:16px;
+}
+.fb-q-label{
+  font-size:13px;
+  color:#A09A90;
+  margin-bottom:8px;
+}
+.fb-options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.fb-opt{
+  padding:8px 16px;
+  border-radius:18px;
+  border:1.5px solid rgba(255,255,255,0.1);
+  background:transparent;
+  color:#8A857B;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all 0.2s;
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+}
+.fb-opt:active{
+  transform:scale(0.95);
+}
+.fb-opt.selected{
+  border-color:var(--accent);
+  background:rgba(212,114,140,0.12);
+  color:#E8E2D8;
+}
+.fb-text{
+  width:100%;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1.5px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.03);
+  color:#E8E2D8;
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  outline:none;
+  transition:border-color 0.25s;
+  -webkit-appearance:none;
+}
+.fb-text::placeholder{
+  color:#4A4640;
+}
+.fb-text:focus{
+  border-color:rgba(212,114,140,0.4);
+}
+.fb-send{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  margin-top:20px;
+  padding:14px 24px;
+  border-radius:14px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background 0.25s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.fb-send:active{
+  transform:scale(0.97);
+  background:#B05A72;
+}
+.fb-send.sent{
+  background:#3A7A5A;
+  pointer-events:none;
+}
+.fb-hint{
+  font-size:12px;
+  color:#4A4640;
+  margin-top:8px;
+  text-align:center;
+}
+
+/* ======================================================
+   UTILITIES
+   ====================================================== */
+.day-chip{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.day-card{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.day-card:active{transform:scale(0.97)}
+.day-card.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+@keyframes cardTap{0%{transform:scale(1)}50%{transform:scale(0.96)}100%{transform:scale(1)}}
+.day-card.tap-feedback{animation:cardTap 0.25s ease}
+.book-dots .dot{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background 0.3s, width 0.3s}
+.vc-btn.listening{background:#E55A5A;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.day-story{min-height:100%;padding-bottom:24px;transition:background 0.3s}
+.day-story.dark{background:var(--bg-dark)}
+.day-story.dark .status-bar{background:rgba(0,0,0,0.5);color:var(--text-dark)}
+.day-story.dark .book-location{color:var(--text-muted-dark)}
+.day-story.dark .book-content p{color:var(--text-dark)}
+.day-story.dark .voice-card{background:var(--card-dark)}
+.day-story.dark .voice-card .vc-question{color:var(--text-secondary-dark)}
+.day-story.dark .voice-card .vc-btn{background:var(--accent-dark)}
+.day-story.dark .now-playing{background:rgba(255,255,255,0.06)}
+.day-story.dark .np-title{color:var(--text-dark)}
+.day-story.dark .np-artist{color:var(--text-muted-dark)}
+.day-story.dark .crossover{background:rgba(228,136,160,0.06);border-color:rgba(228,136,160,0.15)}
+.day-story.dark .crossover-card{background:var(--card-dark)}
+.day-story.dark .crossover-card.courtney{background:rgba(37,32,34,0.8)}
+.day-story.dark .crossover-card p{color:var(--text-secondary-dark)}
+.day-story.dark .book-dots .dot{background:var(--border-dark)}
+.day-story.dark .book-dots .dot.active{background:var(--accent-dark)}
+
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  border:0;
+}
+</style>
+</head>
+<body>
+
+<div class="page-container" id="main-container">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <div class="app-name-block">
+      <div class="app-name-struck"><s>Mementos</s></div>
+      <div class="app-name-tbd">( still needs a name )</div>
+    </div>
+    <h1>Here's what your trip looks like.</h1>
+    <p>You take the photos. The app writes your story.</p>
+    <p class="intro-note">You picked the direction. This is what we're building.</p>
+  </div>
+
+  <!-- THEME SWITCHER -->
+  <div class="theme-switcher">
+    <div class="theme-label">Trip Color Theme</div>
+    <div class="theme-sub">Every trip gets its own color mood</div>
+    <div class="theme-dots">
+      <button class="theme-dot" data-theme="warm-earth" style="background:#C4754B" title="Warm Earth" onclick="setTheme('warm-earth',this)"></button>
+      <button class="theme-dot" data-theme="soft-ink" style="background:#6B7B8D" title="Soft Ink" onclick="setTheme('soft-ink',this)"></button>
+      <button class="theme-dot" data-theme="golden-hour" style="background:#D4A03C" title="Golden Hour" onclick="setTheme('golden-hour',this)"></button>
+      <button class="theme-dot" data-theme="orchid" style="background:#9B6B9E" title="Orchid" onclick="setTheme('orchid',this)"></button>
+      <button class="theme-dot" data-theme="coastal" style="background:#4A8B7F" title="Coastal" onclick="setTheme('coastal',this)"></button>
+      <button class="theme-dot" data-theme="midnight" style="background:#5B6FAD" title="Night Sky" onclick="setTheme('midnight',this)"></button>
+      <button class="theme-dot active" data-theme="ros&eacute;" style="background:#D4728C" title="Court Pink" onclick="setTheme('ros\u00e9',this)"></button>
+    </div>
+    <div class="theme-footer">
+      <div class="theme-name">Court Pink</div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="light" onclick="setMode('light')">&#9788;</button>
+        <button class="mode-btn" data-mode="dark" onclick="setMode('dark')">&#9789;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHONE -->
+  <div class="phone-section" id="phone-section">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-scroll" id="phone-scroll">
+
+          <!-- VIEW A: Trip Overview -->
+          <div class="app-view" id="view-overview">
+            <div class="journal-screen" id="journal-screen">
+              <div class="status-bar light">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <span>&#9679;&#9679;&#9679;&#9679;</span>
+                  <span>&#128267;</span>
+                </div>
+              </div>
+
+              <!-- Cover photo -->
+              <div class="trip-cover">
+                <div class="photo grad-harbor" style="width:100%;height:100%">
+                </div>
+                <div class="trip-cover-overlay">
+                  <h3>South of France</h3>
+                  <div class="trip-dates">June 2026</div>
+                </div>
+              </div>
+
+              <!-- Day chips -->
+              <div class="day-chips">
+                <div class="day-chip active" onclick="selectDay(0)">Day 1</div>
+                <div class="day-chip" onclick="selectDay(1)">Day 2</div>
+                <div class="day-chip" onclick="selectDay(2)">Day 3</div>
+              </div>
+
+              <!-- Day 1 Card -->
+              <div class="day-card visible show selected" id="card-0" data-day="0" onclick="tapCard(0)">
+                <div class="photo day-card-photo grad-acropolis">
+                  <span class="photo-label">right when the light got good</span>
+                </div>
+                <div class="day-card-body">
+                  <div class="day-label">Day 1 &middot; June 20</div>
+                  <h4>The First Morning in Nice</h4>
+                  <div class="card-location">&#128205; Vieux Nice &middot; 26&deg;C</div>
+                  <p>The old town is all narrow streets and faded shutters and someone selling lavender out of a crate. We found this cafe tucked behind the flower market where Courtney accidentally ordered a shoe instead of coffee.</p>
+                </div>
+              </div>
+
+              <!-- Day 2 Card -->
+              <div class="day-card" id="card-1" data-day="1" onclick="tapCard(1)" style="margin-top:14px">
+                <div class="photo day-card-photo grad-cannes">
+                  <span class="photo-label">yacht counting headquarters</span>
+                </div>
+                <div class="day-card-body">
+                  <div class="day-label">Day 2 &middot; June 21</div>
+                  <h4>The Croisette and Every Yacht</h4>
+                  <div class="card-location">&#128205; La Croisette, Cannes &middot; 28&deg;C</div>
+                  <p>Thirty minutes on the train and the coastline is just cliffs dropping into turquoise water the entire way. Walked the Croisette end to end. Courtney counted every yacht in the harbor. Every single one.</p>
+                </div>
+              </div>
+
+              <!-- Day 3 Card -->
+              <div class="day-card" id="card-2" data-day="2" onclick="tapCard(2)" style="margin-top:14px">
+                <div class="photo day-card-photo grad-lisbon">
+                  <span class="photo-label">worth every chicken</span>
+                </div>
+                <div class="day-card-body">
+                  <div class="day-label">Day 3 &middot; June 22</div>
+                  <h4>&Egrave;ze, Eventually</h4>
+                  <div class="card-location">&#128205; &Egrave;ze &middot; 24&deg;C</div>
+                  <p>This medieval village sits on a cliff 400 meters above the sea. You can see all the way to Corsica on a clear day. Getting there was another story. Google Maps sent us through someone's actual backyard.</p>
+                </div>
+              </div>
+
+              <div style="height:20px"></div>
+
+              <div class="tab-bar">
+                <div class="tab-bar-item active">
+                  <span class="tab-bar-icon">&#128214;</span>
+                  Trip
+                </div>
+                <div class="tab-bar-item">
+                  <span class="tab-bar-icon">&#9734;</span>
+                  Activity
+                </div>
+                <div class="tab-bar-item">
+                  <span class="tab-bar-icon">&#9881;</span>
+                  Settings
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW B: Day Stories (hidden by default) -->
+          <div class="app-view" id="view-story" style="display:none">
+
+            <!-- DAY 1 STORY -->
+            <div class="book-screen" id="book-screen">
+              <div class="status-bar light">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <span>&#9679;&#9679;&#9679;&#9679;</span>
+                  <span>&#128267;</span>
+                </div>
+              </div>
+
+              <div class="back-nav" onclick="goBack()">
+                <span class="back-arrow">&#8249;</span> South of France
+              </div>
+
+              <!-- Hero -->
+              <div class="book-hero">
+                <div class="photo grad-acropolis" style="width:100%;height:100%">
+                </div>
+                <div class="book-hero-overlay">
+                  <div class="day-label">Day 1 &middot; June 20</div>
+                  <h3>The First Morning in Nice</h3>
+                </div>
+              </div>
+
+              <div class="book-location">&#128205; Vieux Nice &middot; 26&deg;C</div>
+
+              <div class="book-content">
+                <p>We got to Nice around noon. The old town hits you immediately. These narrow streets with faded ochre buildings, shutters half open, laundry hanging between balconies. Cours Saleya was packed with flower vendors and the whole street smelled like lavender and fresh bread. I lost Courtney for twenty minutes. Found her holding a bag of soap she definitely didn't need. We ended up at this bistro halfway up the Colline du Ch&acirc;teau where the waiter kept bringing us things we didn't order and waving off every attempt to pay for them.</p>
+              </div>
+
+              <!-- Now Playing -->
+              <div class="now-playing">
+                <div class="np-icon">&#9835;</div>
+                <div class="np-info">
+                  <div class="np-title">Die With A Smile</div>
+                  <div class="np-artist">Lady Gaga &amp; Bruno Mars</div>
+                </div>
+                <div class="np-wave">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+
+              <!-- Inline photo -->
+              <div class="book-content">
+                <div class="photo inline-photo grad-ceramics">
+                  <span class="photo-label">the soap market, obviously</span>
+                </div>
+              </div>
+
+              <!-- Voice prompt -->
+              <div class="voice-card">
+                <div class="vc-label">The app asks you</div>
+                <div class="vc-question">"You were at that bistro on the hill for two hours. What made you stay?"</div>
+                <button class="vc-btn" onclick="tapVoice(this)">&#127908; Tell me about it</button>
+              </div>
+
+              <!-- CROSSOVER MOMENT -->
+              <div class="crossover">
+                <div class="crossover-label">Two perspectives, one moment</div>
+                <div class="crossover-cards">
+                  <div class="crossover-card spencer">
+                    <div class="who">Spencer</div>
+                    <p>Found a rooftop bar up four flights of sketchy stairs. Ordered two of whatever the guy next to me was having. Texted her "meet me on the roof." No other context.</p>
+                  </div>
+                  <div class="crossover-card courtney">
+                    <div class="who">Courtney</div>
+                    <p>He texted "meet me on the roof" with zero context. Four flights in sandals. But then you step out and the whole bay is right there, and he's already got my drink. Ok fine. Worth it.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Continue content -->
+              <div class="book-content">
+                <p>We stayed on that rooftop until the sun went down. The whole bay turned this deep copper, then pink, then the lights along the Promenade started flickering on one by one. The bartender brought candles out. Courtney took credit for the pink. Best first day of any trip I've been on.</p>
+
+                <div class="photo inline-photo grad-rooftop">
+                  <span class="photo-label">the rooftop. you know the one.</span>
+                </div>
+              </div>
+
+              <!-- Page dots -->
+              <div class="book-dots">
+                <div class="dot active" onclick="showDay(0)"></div>
+                <div class="dot" onclick="showDay(1)"></div>
+                <div class="dot" onclick="showDay(2)"></div>
+              </div>
+            </div>
+
+            <!-- DAY 2 STORY -->
+            <div class="book-screen day-story" id="day-story-1" style="display:none">
+              <div class="status-bar light">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <span>&#9679;&#9679;&#9679;&#9679;</span>
+                  <span>&#128267;</span>
+                </div>
+              </div>
+
+              <div class="back-nav" onclick="goBack()">
+                <span class="back-arrow">&#8249;</span> South of France
+              </div>
+
+              <div class="book-hero">
+                <div class="photo grad-cannes" style="width:100%;height:100%">
+                </div>
+                <div class="book-hero-overlay">
+                  <div class="day-label">Day 2 &middot; June 21</div>
+                  <h3>The Croisette and Every Yacht</h3>
+                </div>
+              </div>
+
+              <div class="book-location">&#128205; La Croisette, Cannes &middot; 28&deg;C</div>
+
+              <div class="book-content">
+                <p>The train from Nice hugs the coast the entire way. Thirty minutes of cliffs dropping straight into turquoise water, little towns flashing past with orange roofs and church steeples. You step off in Cannes and it immediately feels different. Wider streets, bigger sunglasses, more attitude.</p>
+              </div>
+
+              <div class="book-content">
+                <div class="photo inline-photo grad-harbor">
+                  <span class="photo-label">forty photos of this exact view</span>
+                </div>
+                <p>We walked the Croisette end to end. Courtney counted every yacht in the harbor. I told her that's not a personality trait. She said neither is whatever I was doing on my phone. Fair enough.</p>
+              </div>
+
+              <div class="now-playing">
+                <div class="np-icon">&#9835;</div>
+                <div class="np-info">
+                  <div class="np-title">Espresso</div>
+                  <div class="np-artist">Sabrina Carpenter</div>
+                </div>
+                <div class="np-wave">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+
+              <div class="voice-card">
+                <div class="vc-label">The app asks you</div>
+                <div class="vc-question">"You took about forty photos at the harbor. What was it about that spot?"</div>
+                <button class="vc-btn" onclick="tapVoice(this)">&#127908; Tell me about it</button>
+              </div>
+
+              <div class="book-content">
+                <p>Found this place on a side street behind the Palais des Festivals. Tiny, maybe eight tables, no menu in English. The owner pointed at things and we nodded. Everything was perfect. The ros&eacute; was cold and the bread never stopped coming.</p>
+              </div>
+
+              <div class="book-dots">
+                <div class="dot" onclick="showDay(0)"></div>
+                <div class="dot active" onclick="showDay(1)"></div>
+                <div class="dot" onclick="showDay(2)"></div>
+              </div>
+            </div>
+
+            <!-- DAY 3 STORY -->
+            <div class="book-screen day-story" id="day-story-2" style="display:none">
+              <div class="status-bar light">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <span>&#9679;&#9679;&#9679;&#9679;</span>
+                  <span>&#128267;</span>
+                </div>
+              </div>
+
+              <div class="back-nav" onclick="goBack()">
+                <span class="back-arrow">&#8249;</span> South of France
+              </div>
+
+              <div class="book-hero">
+                <div class="photo grad-lisbon" style="width:100%;height:100%">
+                </div>
+                <div class="book-hero-overlay">
+                  <div class="day-label">Day 3 &middot; June 22</div>
+                  <h3>&Egrave;ze, Eventually</h3>
+                </div>
+              </div>
+
+              <div class="book-location">&#128205; &Egrave;ze &middot; 24&deg;C</div>
+
+              <div class="book-content">
+                <p>Google Maps sent us through someone's actual backyard. Like, there were chickens. Courtney was dying. We rerouted twice, took a bus that felt like it was held together by optimism, and climbed the last stretch on foot. But then you come around this corner and the whole Mediterranean just opens up below you. Four hundred meters straight down to the water.</p>
+              </div>
+
+              <div class="book-content">
+                <div class="photo inline-photo grad-market">
+                  <span class="photo-label">the reason we climbed</span>
+                </div>
+                <p>The village itself is all stone walls and winding paths and cactus gardens clinging to the cliff. We found a spot at the top with two chairs and no one around and just sat there. You could see all the way to where the sky meets the water. On a clear day they say you can see Corsica.</p>
+              </div>
+
+              <div class="crossover">
+                <div class="crossover-label">Two perspectives, one moment</div>
+                <div class="crossover-cards">
+                  <div class="crossover-card spencer">
+                    <div class="who">Spencer</div>
+                    <p>She went quiet at the top. Not bad quiet. The kind where someone's actually seeing something. Took a photo of her instead of the view.</p>
+                  </div>
+                  <div class="crossover-card courtney">
+                    <div class="who">Courtney</div>
+                    <p>I caught him taking a photo of me staring at the view. He tried to play it off. He did not play it off.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="voice-card">
+                <div class="vc-label">The app asks you</div>
+                <div class="vc-question">"You sat at the top of &Egrave;ze for almost an hour. What were you thinking about?"</div>
+                <button class="vc-btn" onclick="tapVoice(this)">&#127908; Tell me about it</button>
+              </div>
+
+              <div class="book-dots">
+                <div class="dot" onclick="showDay(0)"></div>
+                <div class="dot" onclick="showDay(1)"></div>
+                <div class="dot active" onclick="showDay(2)"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="fb-section">
+    <div class="fb-heading">What do you think?</div>
+
+    <div class="fb-q" data-key="length">
+      <div class="fb-q-label">Each day's story is...</div>
+      <div class="fb-options">
+        <button class="fb-opt" onclick="fbPick(this,'length','Too much')">Too much</button>
+        <button class="fb-opt" onclick="fbPick(this,'length','Just right')">Just right</button>
+        <button class="fb-opt" onclick="fbPick(this,'length','Want more')">Want more</button>
+      </div>
+    </div>
+
+    <div class="fb-q" data-key="photos">
+      <div class="fb-q-label">For photos, I'd want to...</div>
+      <div class="fb-options">
+        <button class="fb-opt" onclick="fbPick(this,'photos','Pick my own')">Pick my own</button>
+        <button class="fb-opt" onclick="fbPick(this,'photos','Let the app choose')">Let the app choose</button>
+        <button class="fb-opt" onclick="fbPick(this,'photos','Both')">Both</button>
+      </div>
+    </div>
+
+    <div class="fb-q" data-key="revisit">
+      <div class="fb-q-label">I'd reread old trips...</div>
+      <div class="fb-options">
+        <button class="fb-opt" onclick="fbPick(this,'revisit','All the time')">All the time</button>
+        <button class="fb-opt" onclick="fbPick(this,'revisit','Sometimes')">Sometimes</button>
+        <button class="fb-opt" onclick="fbPick(this,'revisit','Probably not')">Probably not</button>
+      </div>
+    </div>
+
+    <div class="fb-q">
+      <div class="fb-q-label">What's missing?</div>
+      <input class="fb-text" id="fb-missing" type="text" placeholder="Anything you expected to see?" oninput="fbMissing()">
+    </div>
+
+    <button class="fb-send" id="fb-send" onclick="fbSend()">Submit</button>
+    <div class="fb-hint" id="fb-hint"></div>
+  </div>
+
+</div>
+
+<script>
+// ======================================================
+// THEME DEFINITIONS
+// ======================================================
+var themes = {
+  'warm-earth': {
+    name: 'Warm Earth',
+    accent: '#C4754B', accentDark: '#D4885B',
+    bgLight: '#FBF8F3', bgDark: '#1C1A17',
+    textLight: '#2C2825', textDark: '#E8E2D8',
+    textSecondaryLight: '#3A3835', textSecondaryDark: '#C4B8A8',
+    textMutedLight: '#8A857B', textMutedDark: '#6A655F',
+    cardDark: '#252220', borderDark: '#3A3530', chipInactiveDark: '#2A2725'
+  },
+  'soft-ink': {
+    name: 'Soft Ink',
+    accent: '#6B7B8D', accentDark: '#8B9BAD',
+    bgLight: '#F8F9FA', bgDark: '#1A1C1E',
+    textLight: '#2A2D30', textDark: '#E0E3E6',
+    textSecondaryLight: '#3A3D40', textSecondaryDark: '#B8BDC4',
+    textMutedLight: '#8A8D90', textMutedDark: '#5A5D60',
+    cardDark: '#222428', borderDark: '#353840', chipInactiveDark: '#282A2E'
+  },
+  'golden-hour': {
+    name: 'Golden Hour',
+    accent: '#D4A03C', accentDark: '#E4B04C',
+    bgLight: '#FFFBF0', bgDark: '#1C1A15',
+    textLight: '#2C2825', textDark: '#E8E2D8',
+    textSecondaryLight: '#3A3835', textSecondaryDark: '#C4B8A8',
+    textMutedLight: '#8A857B', textMutedDark: '#6A655F',
+    cardDark: '#252218', borderDark: '#3A3528', chipInactiveDark: '#2A2720'
+  },
+  'orchid': {
+    name: 'Orchid',
+    accent: '#9B6B9E', accentDark: '#B080B3',
+    bgLight: '#FBF8FC', bgDark: '#1C1A1E',
+    textLight: '#2C2528', textDark: '#E6E0E8',
+    textSecondaryLight: '#3A3538', textSecondaryDark: '#C0B4C4',
+    textMutedLight: '#8A8590', textMutedDark: '#6A5F6E',
+    cardDark: '#252028', borderDark: '#3A3540', chipInactiveDark: '#2A2530'
+  },
+  'coastal': {
+    name: 'Coastal',
+    accent: '#4A8B7F', accentDark: '#5AA08F',
+    bgLight: '#F5FAF9', bgDark: '#181C1B',
+    textLight: '#252C2A', textDark: '#DEE6E3',
+    textSecondaryLight: '#353C3A', textSecondaryDark: '#B4C0BC',
+    textMutedLight: '#7A857F', textMutedDark: '#5A655F',
+    cardDark: '#1E2422', borderDark: '#303835', chipInactiveDark: '#252C2A'
+  },
+  'midnight': {
+    name: 'Night Sky',
+    accent: '#5B6FAD', accentDark: '#7080BD',
+    bgLight: '#F6F7FB', bgDark: '#191A1E',
+    textLight: '#252830', textDark: '#DEE0E8',
+    textSecondaryLight: '#353840', textSecondaryDark: '#B4B8C4',
+    textMutedLight: '#7A7F8A', textMutedDark: '#5A5F6A',
+    cardDark: '#1E2028', borderDark: '#303540', chipInactiveDark: '#252830'
+  },
+  'ros\u00e9': {
+    name: 'Court Pink',
+    accent: '#D4728C', accentDark: '#E488A0',
+    bgLight: '#FDF6F8', bgDark: '#1E181A',
+    textLight: '#2C2528', textDark: '#E8DEE2',
+    textSecondaryLight: '#3A3538', textSecondaryDark: '#C4B4BC',
+    textMutedLight: '#8A7F85', textMutedDark: '#6A5F65',
+    cardDark: '#252022', borderDark: '#3A3035', chipInactiveDark: '#2A2528'
+  }
+};
+
+// ======================================================
+// THEME SWITCHING
+// ======================================================
+function setTheme(themeId, dotEl) {
+  var theme = themes[themeId];
+  if (!theme) return;
+
+  var container = document.getElementById('main-container');
+  container.style.setProperty('--accent', theme.accent);
+  container.style.setProperty('--accent-dark', theme.accentDark);
+  container.style.setProperty('--bg-light', theme.bgLight);
+  container.style.setProperty('--bg-dark', theme.bgDark);
+  container.style.setProperty('--text-light', theme.textLight);
+  container.style.setProperty('--text-dark', theme.textDark);
+  container.style.setProperty('--text-secondary-light', theme.textSecondaryLight);
+  container.style.setProperty('--text-secondary-dark', theme.textSecondaryDark);
+  container.style.setProperty('--text-muted-light', theme.textMutedLight);
+  container.style.setProperty('--text-muted-dark', theme.textMutedDark);
+  container.style.setProperty('--card-dark', theme.cardDark);
+  container.style.setProperty('--border-dark', theme.borderDark);
+  container.style.setProperty('--chip-inactive-dark', theme.chipInactiveDark);
+
+  // Update active dot
+  document.querySelectorAll('.theme-dot').forEach(function(d) { d.classList.remove('active'); });
+  dotEl.classList.add('active');
+
+  // Update theme name
+  document.querySelector('.theme-name').textContent = theme.name;
+}
+
+// ======================================================
+// LIGHT/DARK MODE TOGGLE
+// ======================================================
+function setMode(mode) {
+  var screens = document.querySelectorAll('.book-screen, .journal-screen, .day-story');
+
+  screens.forEach(function(screen) {
+    var statusBar = screen.querySelector('.status-bar');
+    if (mode === 'dark') {
+      screen.classList.add('dark');
+      if (statusBar) {
+        statusBar.classList.remove('light');
+        statusBar.classList.add('dark');
+      }
+    } else {
+      screen.classList.remove('dark');
+      if (statusBar) {
+        statusBar.classList.remove('dark');
+        statusBar.classList.add('light');
+      }
+    }
+  });
+
+  // Update mode toggle buttons
+  document.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
+  });
+}
+
+// ======================================================
+// FEEDBACK + NTFY
+// ======================================================
+var fbData = JSON.parse(localStorage.getItem('fbData') || '{}');
+var ntfyTopic = 'tj-fb-k9x2m7';
+
+var fbLabels = {
+  length: 'Story length',
+  photos: 'Photos',
+  revisit: 'Revisit trips'
+};
+var fbKeys = ['length','photos','revisit'];
+
+function fbPick(el, key, value) {
+  var opts = el.parentElement;
+  opts.querySelectorAll('.fb-opt').forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+  fbData[key] = value;
+  localStorage.setItem('fbData', JSON.stringify(fbData));
+  scheduleNtfy();
+}
+
+function fbMissing() {
+  fbData.missing = document.getElementById('fb-missing').value;
+  localStorage.setItem('fbData', JSON.stringify(fbData));
+}
+
+function fbSend() {
+  var lines = [];
+  fbKeys.forEach(function(k) {
+    if (fbData[k]) lines.push(fbLabels[k] + ': ' + fbData[k]);
+  });
+  var missing = (fbData.missing || '').trim();
+  if (missing) lines.push('Missing: ' + missing);
+  if (lines.length === 0) {
+    document.getElementById('fb-hint').textContent = 'Pick at least one option first';
+    return;
+  }
+  // Fire ntfy immediately
+  try {
+    fetch('https://ntfy.sh/' + ntfyTopic, {
+      method: 'POST',
+      body: lines.join('\n')
+    }).catch(function(){});
+  } catch(e) {}
+  var btn = document.getElementById('fb-send');
+  btn.textContent = 'Sent';
+  btn.classList.add('sent');
+  document.getElementById('fb-hint').textContent = 'Spencer got your picks';
+}
+
+var ntfyTimer = null;
+function scheduleNtfy() {
+  clearTimeout(ntfyTimer);
+  ntfyTimer = setTimeout(function() {
+    var lines = [];
+    fbKeys.forEach(function(k) {
+      if (fbData[k]) lines.push(fbLabels[k] + ': ' + fbData[k]);
+    });
+    var missing = (fbData.missing || '').trim();
+    if (missing) lines.push('Missing: ' + missing);
+    if (lines.length === 0) return;
+    try {
+      fetch('https://ntfy.sh/' + ntfyTopic, {
+        method: 'POST',
+        body: lines.join('\n')
+      }).catch(function(){});
+    } catch(e) {}
+  }, 3000);
+}
+
+// ======================================================
+// DAY NAVIGATION
+// ======================================================
+var currentDay = 0;
+var currentView = 'overview';
+
+function openDay(dayIndex) {
+  currentDay = dayIndex;
+  currentView = 'story';
+
+  var isDark = document.getElementById('view-overview').querySelector('.journal-screen').classList.contains('dark');
+
+  // Hide overview, show story view
+  document.getElementById('view-overview').style.display = 'none';
+  document.getElementById('view-story').style.display = 'block';
+
+  // Show correct day story
+  var bookScreen = document.getElementById('book-screen');
+  bookScreen.style.display = dayIndex === 0 ? 'block' : 'none';
+
+  document.querySelectorAll('.day-story').forEach(function(ds) { ds.style.display = 'none'; });
+  var dayStory = document.getElementById('day-story-' + dayIndex);
+  if (dayStory) {
+    dayStory.style.display = 'block';
+    if (isDark) dayStory.classList.add('dark');
+    else dayStory.classList.remove('dark');
+  }
+
+  // Update dots
+  document.querySelectorAll('.book-dots').forEach(function(dotContainer) {
+    var dots = dotContainer.querySelectorAll('.dot');
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === dayIndex); });
+  });
+
+  // Update chips
+  document.querySelectorAll('.day-chip').forEach(function(c, i) {
+    c.classList.toggle('active', i === dayIndex);
+  });
+
+  // Scroll phone to top
+  var scroll = document.getElementById('phone-scroll');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function goBack() {
+  currentView = 'overview';
+  document.getElementById('view-overview').style.display = 'block';
+  document.getElementById('view-story').style.display = 'none';
+
+  // Scroll phone to top
+  var scroll = document.getElementById('phone-scroll');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function showDay(dayIndex) {
+  // Called by dots - switch day within story view
+  openDay(dayIndex);
+}
+
+function selectDay(dayIndex) {
+  // Called by day chips in overview - highlight chip and card
+  currentDay = dayIndex;
+
+  // Update chips
+  document.querySelectorAll('.day-chip').forEach(function(c, i) {
+    c.classList.toggle('active', i === dayIndex);
+  });
+
+  // Update card visibility
+  var cards = document.querySelectorAll('.day-card');
+  cards.forEach(function(c) { c.classList.remove('selected', 'visible', 'show'); });
+  var card = document.getElementById('card-' + dayIndex);
+  if (card) {
+    card.classList.add('visible', 'selected');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { card.classList.add('show'); });
+    });
+  }
+}
+
+function tapCard(dayIndex) {
+  // Tap feedback then navigate into day story
+  var card = document.getElementById('card-' + dayIndex);
+  if (card) {
+    card.classList.remove('tap-feedback');
+    void card.offsetWidth;
+    card.classList.add('tap-feedback');
+  }
+  // Small delay for the tap animation to register
+  setTimeout(function() { openDay(dayIndex); }, 150);
+}
+
+// ======================================================
+// VOICE BUTTON
+// ======================================================
+function tapVoice(btn) {
+  if (btn.classList.contains('listening')) {
+    btn.classList.remove('listening');
+    btn.innerHTML = '&#127908; Tell me about it';
+    return;
+  }
+  btn.classList.add('listening');
+  btn.innerHTML = '&#127908; Listening...';
+  setTimeout(function() {
+    btn.classList.remove('listening');
+    btn.innerHTML = '&#10003; Got it. This will make the story better.';
+    btn.style.background = '#3A7A5A';
+  }, 1500);
+}
+
+// ======================================================
+// INIT ON LOAD
+// ======================================================
+document.addEventListener('DOMContentLoaded', function() {
+  // Restore feedback selections
+  ['length','photos','revisit'].forEach(function(key) {
+    if (fbData[key]) {
+      var q = document.querySelector('.fb-q[data-key="' + key + '"]');
+      if (q) {
+        q.querySelectorAll('.fb-opt').forEach(function(opt) {
+          if (opt.textContent.trim() === fbData[key]) {
+            opt.classList.add('selected');
+          }
+        });
+      }
+    }
+  });
+  if (fbData.missing) {
+    var mi = document.getElementById('fb-missing');
+    if (mi) mi.value = fbData.missing;
+  }
+
+  // Show first day card by default
+  var firstCard = document.getElementById('card-0');
+  if (firstCard) {
+    firstCard.classList.add('visible', 'show');
+  }
+
+  // Entrance animation for single phone
+  var phoneSection = document.getElementById('phone-section');
+  if (phoneSection) {
+    phoneSection.style.opacity = '0';
+    phoneSection.style.transform = 'translateY(20px)';
+    phoneSection.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(phoneSection);
+  }
+});
+</script>
+
+</body>
+</html>
