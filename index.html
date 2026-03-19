@@ -1471,6 +1471,7 @@ img{display:block;max-width:100%}
 
     <button class="fb-send" id="fb-send" onclick="fbSend()">Submit</button>
     <div class="fb-hint" id="fb-hint"></div>
+    <div style="text-align:center;margin-top:16px"><a href="#" onclick="fbClear();return false" style="color:var(--text-muted-dark);font-size:12px;text-decoration:underline">Clear my answers</a></div>
   </div>
 
 </div>
@@ -1653,6 +1654,18 @@ function fbSend() {
   btn.textContent = 'Sent';
   btn.classList.add('sent');
   document.getElementById('fb-hint').textContent = 'Spencer got your picks';
+}
+
+function fbClear() {
+  fbData = {};
+  localStorage.removeItem('fbData');
+  document.querySelectorAll('.fb-opt').forEach(function(o) { o.classList.remove('selected'); });
+  var missing = document.getElementById('fb-missing');
+  if (missing) missing.value = '';
+  var btn = document.getElementById('fb-send');
+  btn.textContent = 'Submit';
+  btn.classList.remove('sent');
+  document.getElementById('fb-hint').textContent = '';
 }
 
 var ntfyTimer = null;
