@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Hybrid</title>
+<title>South of France — June 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
@@ -102,6 +102,21 @@ img{display:block;max-width:100%}
   color:#6A655F;
   font-style:italic;
   margin-top:12px;
+}
+.intro-callout{
+  font-size:13px;
+  color:var(--accent);
+  font-weight:500;
+  margin-top:14px;
+  letter-spacing:0.01em;
+}
+.intro-credit{
+  font-family:'Lora',serif;
+  font-size:15px;
+  color:#C4B8A8;
+  font-style:italic;
+  margin-top:16px;
+  letter-spacing:0.01em;
 }
 
 @keyframes fadeInUp{
@@ -503,6 +518,16 @@ img{display:block;max-width:100%}
 .map-popup-desc{
   color:#666;
   font-size:12px;
+}
+.map-popup-go{
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid #eee;
+  color:var(--accent);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
 #view-map .tab-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
@@ -1065,7 +1090,8 @@ img{display:block;max-width:100%}
     </div>
     <h1>You asked for a map. So we built one.</h1>
     <p>You take the photos. The app writes your story.<br>You tell us what's missing. We make it real.</p>
-    <p class="intro-note">Co-designed by Courtney. Obviously.</p>
+    <p class="intro-callout">Tap the Map tab inside the phone to see it.</p>
+    <p class="intro-credit">Co-designed by Courtney. Obviously.</p>
   </div>
 
   <!-- THEME SWITCHER -->
@@ -1437,30 +1463,30 @@ img{display:block;max-width:100%}
   <div class="fb-section">
     <div class="fb-heading">What do you think?</div>
 
-    <div class="fb-q" data-key="length">
-      <div class="fb-q-label">Each day's story is...</div>
+    <div class="fb-q" data-key="map">
+      <div class="fb-q-label">The map view is...</div>
       <div class="fb-options">
-        <button class="fb-opt" onclick="fbPick(this,'length','Too much')">Too much</button>
-        <button class="fb-opt" onclick="fbPick(this,'length','Just right')">Just right</button>
-        <button class="fb-opt" onclick="fbPick(this,'length','Want more')">Want more</button>
+        <button class="fb-opt" onclick="fbPick(this,'map','Exactly what I meant')">Exactly what I meant</button>
+        <button class="fb-opt" onclick="fbPick(this,'map','Close but needs more')">Close but needs more</button>
+        <button class="fb-opt" onclick="fbPick(this,'map','Not what I imagined')">Not what I imagined</button>
       </div>
     </div>
 
-    <div class="fb-q" data-key="photos">
-      <div class="fb-q-label">For photos, I'd want to...</div>
+    <div class="fb-q" data-key="navigation">
+      <div class="fb-q-label">Tapping around the app feels...</div>
       <div class="fb-options">
-        <button class="fb-opt" onclick="fbPick(this,'photos','Pick my own')">Pick my own</button>
-        <button class="fb-opt" onclick="fbPick(this,'photos','Let the app choose')">Let the app choose</button>
-        <button class="fb-opt" onclick="fbPick(this,'photos','Both')">Both</button>
+        <button class="fb-opt" onclick="fbPick(this,'navigation','Natural')">Natural</button>
+        <button class="fb-opt" onclick="fbPick(this,'navigation','Confusing')">Confusing</button>
+        <button class="fb-opt" onclick="fbPick(this,'navigation','Fine but clunky')">Fine but clunky</button>
       </div>
     </div>
 
-    <div class="fb-q" data-key="revisit">
-      <div class="fb-q-label">I'd reread old trips...</div>
+    <div class="fb-q" data-key="voice">
+      <div class="fb-q-label">The voice prompts (app asks you)...</div>
       <div class="fb-options">
-        <button class="fb-opt" onclick="fbPick(this,'revisit','All the time')">All the time</button>
-        <button class="fb-opt" onclick="fbPick(this,'revisit','Sometimes')">Sometimes</button>
-        <button class="fb-opt" onclick="fbPick(this,'revisit','Probably not')">Probably not</button>
+        <button class="fb-opt" onclick="fbPick(this,'voice','I would answer them')">I'd answer them</button>
+        <button class="fb-opt" onclick="fbPick(this,'voice','Too much effort')">Too much effort</button>
+        <button class="fb-opt" onclick="fbPick(this,'voice','Depends on my mood')">Depends on my mood</button>
       </div>
     </div>
 
@@ -1471,7 +1497,7 @@ img{display:block;max-width:100%}
 
     <button class="fb-send" id="fb-send" onclick="fbSend()">Submit</button>
     <div class="fb-hint" id="fb-hint"></div>
-    <div style="text-align:center;margin-top:16px"><a href="#" onclick="fbClear();return false" style="color:var(--text-muted-dark);font-size:12px;text-decoration:underline">Clear my answers</a></div>
+    <div style="text-align:center;margin-top:16px"><a href="#" onclick="fbClear();return false" style="color:var(--text-muted-dark);font-size:13px;text-decoration:underline;display:inline-block;padding:8px 16px;-webkit-tap-highlight-color:transparent">Clear my answers</a></div>
   </div>
 
 </div>
@@ -1612,11 +1638,11 @@ var fbData = JSON.parse(localStorage.getItem('fbData') || '{}');
 var ntfyTopic = 'tj-fb-k9x2m7';
 
 var fbLabels = {
-  length: 'Story length',
-  photos: 'Photos',
-  revisit: 'Revisit trips'
+  map: 'Map view',
+  navigation: 'Navigation',
+  voice: 'Voice prompts'
 };
-var fbKeys = ['length','photos','revisit'];
+var fbKeys = ['map','navigation','voice'];
 
 function fbPick(el, key, value) {
   var opts = el.parentElement;
@@ -1743,6 +1769,14 @@ function goBack() {
   if (scroll) scroll.scrollTop = 0;
 }
 
+function mapGoToDay(dayIndex) {
+  document.getElementById('view-map').style.display = 'none';
+  document.getElementById('view-overview').style.display = 'none';
+  document.getElementById('view-story').style.display = 'block';
+  currentView = 'story';
+  openDay(dayIndex);
+}
+
 var mapInitialized = false;
 function showTab(tab) {
   document.getElementById('view-overview').style.display = tab === 'trip' ? 'block' : 'none';
@@ -1765,7 +1799,9 @@ function initMap() {
     attributionControl: false
   }).setView([43.62, 7.15], 10);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  var isDark = document.getElementById('journal-screen') && document.getElementById('journal-screen').classList.contains('dark');
+  var tileStyle = isDark ? 'dark_all' : 'light_all';
+  window.tripTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/' + tileStyle + '/{z}/{x}/{y}{r}.png', {
     maxZoom: 19
   }).addTo(map);
 
@@ -1794,7 +1830,8 @@ function initMap() {
     marker.bindPopup(
       '<div class="map-popup-day">' + d.day + '</div>' +
       '<div class="map-popup-title">' + d.title + '</div>' +
-      '<div class="map-popup-desc">' + d.desc + '</div>'
+      '<div class="map-popup-desc">' + d.desc + '</div>' +
+      '<div class="map-popup-go" onclick="mapGoToDay(' + i + ')">Read this day &rarr;</div>'
     );
     bounds.push([d.lat, d.lng]);
 
