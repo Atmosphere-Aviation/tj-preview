@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 /* ======================================================
    RESET & FOUNDATIONS
@@ -461,6 +463,49 @@ img{display:block;max-width:100%}
   line-height:1.65;
   color:var(--text-secondary-light);
   transition:color 0.3s;
+}
+
+/* Map view */
+#view-map{
+  position:relative;
+  width:100%;height:100%;
+}
+#view-map .status-bar{
+  position:absolute;top:0;left:0;right:0;z-index:1000;
+}
+#map-container{
+  position:absolute;top:0;left:0;right:0;bottom:58px;
+  z-index:1;
+}
+#map-container .leaflet-popup-content-wrapper{
+  border-radius:12px;
+  font-family:'Inter',sans-serif;
+}
+#map-container .leaflet-popup-content{
+  margin:10px 14px;
+  font-size:13px;
+  line-height:1.4;
+}
+.map-popup-day{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:2px;
+}
+.map-popup-title{
+  font-family:'Lora',serif;
+  font-size:15px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.map-popup-desc{
+  color:#666;
+  font-size:12px;
+}
+#view-map .tab-bar{
+  position:absolute;bottom:0;left:0;right:0;z-index:1000;
 }
 
 /* Tab bar */
@@ -1018,9 +1063,9 @@ img{display:block;max-width:100%}
       <div class="app-name-struck"><s>Mementos</s></div>
       <div class="app-name-tbd">( still needs a name )</div>
     </div>
-    <h1>Here's what your trip looks like.</h1>
-    <p>You take the photos. The app writes your story.</p>
-    <p class="intro-note">You picked the direction. This is what we're building.</p>
+    <h1>You asked for a map. So we built one.</h1>
+    <p>You take the photos. The app writes your story.<br>You tell us what's missing. We make it real.</p>
+    <p class="intro-note">Co-designed by Courtney. Obviously.</p>
   </div>
 
   <!-- THEME SWITCHER -->
@@ -1121,18 +1166,44 @@ img{display:block;max-width:100%}
               <div style="height:20px"></div>
 
               <div class="tab-bar">
-                <div class="tab-bar-item active">
+                <div class="tab-bar-item active" onclick="showTab('trip')">
                   <span class="tab-bar-icon">&#128214;</span>
                   Trip
                 </div>
-                <div class="tab-bar-item">
-                  <span class="tab-bar-icon">&#9734;</span>
-                  Activity
+                <div class="tab-bar-item" onclick="showTab('map')">
+                  <span class="tab-bar-icon">&#127758;</span>
+                  Map
                 </div>
                 <div class="tab-bar-item">
                   <span class="tab-bar-icon">&#9881;</span>
                   Settings
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW C: Map (hidden by default) -->
+          <div class="app-view" id="view-map" style="display:none">
+            <div class="status-bar light">
+              <span>9:41</span>
+              <div class="status-icons">
+                <span>&#9679;&#9679;&#9679;&#9679;</span>
+                <span>&#128267;</span>
+              </div>
+            </div>
+            <div id="map-container"></div>
+            <div class="tab-bar">
+              <div class="tab-bar-item" onclick="showTab('trip')">
+                <span class="tab-bar-icon">&#128214;</span>
+                Trip
+              </div>
+              <div class="tab-bar-item active" onclick="showTab('map')">
+                <span class="tab-bar-icon">&#127758;</span>
+                Map
+              </div>
+              <div class="tab-bar-item">
+                <span class="tab-bar-icon">&#9881;</span>
+                Settings
               </div>
             </div>
           </div>
@@ -1652,10 +1723,74 @@ function goBack() {
   currentView = 'overview';
   document.getElementById('view-overview').style.display = 'block';
   document.getElementById('view-story').style.display = 'none';
+  document.getElementById('view-map').style.display = 'none';
 
   // Scroll phone to top
   var scroll = document.getElementById('phone-scroll');
   if (scroll) scroll.scrollTop = 0;
+}
+
+var mapInitialized = false;
+function showTab(tab) {
+  document.getElementById('view-overview').style.display = tab === 'trip' ? 'block' : 'none';
+  document.getElementById('view-map').style.display = tab === 'map' ? 'block' : 'none';
+  document.getElementById('view-story').style.display = 'none';
+  currentView = tab;
+
+  if (tab === 'map' && !mapInitialized) {
+    mapInitialized = true;
+    setTimeout(initMap, 100);
+  }
+  if (tab === 'map' && mapInitialized) {
+    setTimeout(function(){ if(window.tripMap) window.tripMap.invalidateSize(); }, 150);
+  }
+}
+
+function initMap() {
+  var map = L.map('map-container', {
+    zoomControl: false,
+    attributionControl: false
+  }).setView([43.62, 7.15], 10);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19
+  }).addTo(map);
+
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#D4728C';
+  function pin(color) {
+    return L.divIcon({
+      className: 'map-pin',
+      html: '<div style="width:28px;height:28px;border-radius:50%;background:' + color + ';border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:12px;font-family:Inter,sans-serif;"></div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -18]
+    });
+  }
+
+  var days = [
+    { lat: 43.6961, lng: 7.2719, day: 'Day 1', title: 'The First Morning in Nice', desc: 'Vieux Nice, Cours Saleya, the rooftop' },
+    { lat: 43.5513, lng: 7.0128, day: 'Day 2', title: 'The Croisette and Every Yacht', desc: 'Cannes, La Croisette, old port' },
+    { lat: 43.7284, lng: 7.3612, day: 'Day 3', title: 'Eze, Eventually', desc: 'The climb, the view, the chickens' }
+  ];
+
+  var bounds = [];
+  days.forEach(function(d, i) {
+    var marker = L.marker([d.lat, d.lng], { icon: pin(accent) }).addTo(map);
+    marker.bindPopup(
+      '<div class="map-popup-day">' + d.day + '</div>' +
+      '<div class="map-popup-title">' + d.title + '</div>' +
+      '<div class="map-popup-desc">' + d.desc + '</div>'
+    );
+    bounds.push([d.lat, d.lng]);
+
+    // Number the pin
+    marker.getElement().querySelector('div').textContent = (i + 1);
+  });
+
+  map.fitBounds(bounds, { padding: [40, 40] });
+  window.tripMap = map;
 }
 
 function showDay(dayIndex) {
